@@ -8,25 +8,19 @@ complete <- function(directory, id = 1:332) {
     # store the list of all the files in the directory
     files <- list.files(full.names=TRUE)
     
-    # create an empty data frame to store all the file data in
-    df <- data.frame()
-    
-    # create an empty data frame to store the complete cases in
+    # create an empty data frame to store the complete cases obs in
     df_obs <- data.frame()
     
     # loop through files specified when func is called
     for (i in id) {
-        # append data from file to df
-        df <- rbind(df, read.csv(files[i]))
-        
-        # subset from the df to just look at each file
-        df_sub <- subset(df, ID==i)
+        # read each file
+        data <- read.csv(files[i])
         
         # store the file id
-        obs_id <- df_sub[1,4]
+        obs_id <- data[1,4]
         
         # calculate the complete cases for each file
-        nobs <- sum(complete.cases(df_sub))
+        nobs <- sum(complete.cases(data))
         
         # store id and complete cases into a vector
         obs_row <- c(obs_id, nobs)
