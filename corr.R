@@ -33,6 +33,6 @@ corr <- function(directory, threshold = 0) {
      }
     
     # return first 6 rows of cor results
-    head(df)
+    df
    
 }
