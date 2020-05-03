@@ -15,7 +15,7 @@ corr <- function(directory, threshold = 0) {
     df_sub <- subset(df_com, nobs > threshold)
     
     # create a new df to store cor results
-    df <- data.frame()
+    cor_results <- c()
     
     # loop through files that met threshold and calc corr for each file
     for (i in df_sub[, c("id")]) {
@@ -29,10 +29,10 @@ corr <- function(directory, threshold = 0) {
          nitrate <- data_clean[, c("nitrate")]
           
          # add cor results to a df for each file
-         df <- rbind(df, cor(sulfate, nitrate))
+         cor_results <- append(cor_results, cor(sulfate, nitrate))
      }
     
     # return first 6 rows of cor results
-    df
+    cor_results
    
 }
