@@ -1,3 +1,7 @@
+# set working directory to path where data is stored
+setwd(file.path("C:", "Users", "cnovacy", "Documents", "01 - Projects", 
+                "Code", "datasciencecoursera"))
+
 # open and read hw 1 data file for 11) - 20)
 data <- read.csv("hw1_data.csv")
 
