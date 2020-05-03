@@ -3,7 +3,7 @@ corr <- function(directory, threshold = 0) {
     
     # set working directory to path where zip file is stored
     setwd(file.path("C:", "Users", "cnovacy", "Documents", "01 - Projects", 
-                    "Code", "datasciencecoursera", directory))
+                  "Code", "datasciencecoursera", directory))
     
     # store the list of all the files in the directory
     files <- list.files(full.names=TRUE)
@@ -14,20 +14,25 @@ corr <- function(directory, threshold = 0) {
     # subset from df_com where cases are higher than the threshold specified
     df_sub <- subset(df_com, nobs > threshold)
     
-    # create a df to store
-    corr_results <- numeric(0)
+    # create a new df to store cor results
+    df <- data.frame()
     
-    # loop through files that met threshold and dump data into new df
+    # loop through files that met threshold and calc corr for each file
     for (i in df_sub[, c("id")]) {
-         # read each file
+         
+         #read each file and remove remove with NAs in sulfate and nitrate cols
          data <- read.csv(files[i])
+         data_clean <- data[!is.na(data$sulfate) & !is.na(data$nitrate),]
          
-         sulfate <- data[, c("sulfate")]
-         nitrate <- data[, c("nitrate")]
-         
+         # create vectors with sulfate and nitrate data to calc cor
+         sulfate <- data_clean[, c("sulfate")]
+         nitrate <- data_clean[, c("nitrate")]
+          
+         # add cor results to a df for each file
          df <- rbind(df, cor(sulfate, nitrate))
      }
     
-    df
+    # return first 6 rows of cor results
+    head(df)
    
 }
