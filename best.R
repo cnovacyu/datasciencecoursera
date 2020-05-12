@@ -26,62 +26,31 @@ best <- function(state, outcome) {
 
     # create subset of data based on outcome specified in parameter
     # sort data and return hospital with lowest death rate
+    
+    #identify columns to be selected based on outcome parameter entered
     if (outcome == "heart attack") {
-        #identify columns to be selected 
         cols <- c(2, 11)
         
-        # create subset df with specified columns
-        df_ht <- state_df[,cols]
-        
-        # convert rates from factor to numeric
-        df_ht[,2] <- as.numeric(as.character(df_ht[,2]))
-        
-        # remove NA values
-        df_ht <- df_ht[complete.cases(df_ht),]
-        
-        # sort data by rates and then hospital name
-        df_ht <- df_ht[order( df_ht[,2], df_ht[,1] ), ]
-        
-        # return name of hospital with lowest rate
-        return(head(df_ht$Hospital.Name, 1))
-              
     } else if (outcome == "heart failure") {
-        #identify columns to be selected
         cols <- c(2, 17)
-        
-        # create subset df with specified columns
-        df_hf <- state_df[,cols]
-        
-        # convert rates from factor to numeric
-        df_hf[,2] <- as.numeric(as.character(df_hf[,2]))
-        
-        # remove NA values
-        df_hf <- df_hf[complete.cases(df_hf),]
-        
-        # sort data by rates and then hospital name
-        df_hf <- df_hf[order(df_hf[,2], df_hf[,1]),]
-        
-        # return name of hospital with lowest rate
-        return(head(df_hf$Hospital.Name, 1))
         
     } else {
         #identify columns to be selected
         cols <- c(2, 23)
-        
-        # create subset df with specified columns
-        df_p <- state_df[,cols]
-        
-        # convert rates from factor to numeric
-        df_p[,2] <- as.numeric(as.character(df_p[,2]))
-        
-        # remove NA values
-        df_p <- df_p[complete.cases(df_p),]
-        
-        # sort data by rates and then hospital name
-        df_p <- df_p[order(df_p[,2], df_p[,1]),]
-        
-        # return name of hospital with lowest rate
-        return(head(df_p$Hospital.Name, 1))
-        
     }
+    
+    # create subset df with specified columns
+    df_sub <- state_df[,cols]
+    
+    # convert rates from factor to numeric
+    df_sub[,2] <- as.numeric(as.character(df_sub[,2]))
+    
+    # remove NA values
+    df_sub <- df_sub[complete.cases(df_sub),]
+    
+    # sort data by rates and then hospital name
+    df_sub <- df_sub[order( df_sub[,2], df_sub[,1] ), ]
+    
+    # return name of hospital with lowest rate
+    return(head(df_sub[,1], 1))
 }
